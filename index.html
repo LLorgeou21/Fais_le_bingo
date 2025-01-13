@@ -84,14 +84,14 @@
     const imagesObtenues = new Set(); // Stocke les numéros des images déjà affichées
 
     function afficherImage() {
-      if (imagesObtenues.size === 57) {
+      if (imagesObtenues.size === 94) {
         alert("Toutes les images ont été obtenues !");
         return;
       }
 
       let numero;
       do {
-        numero = Math.floor(Math.random() * 57) + 1; // Génère un numéro entre 1 et 100
+        numero = Math.floor(Math.random() * 94) + 1; // Génère un numéro entre 1 et 100
       } while (imagesObtenues.has(numero));
 
       imagesObtenues.add(numero); // Ajoute l'image au set des images obtenues
