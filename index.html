@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affichage d'images uniques</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+    #sidebar {
+      width: 200px;
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-right: 2px solid #ccc;
+      overflow-y: auto;
+    }
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #image-container {
+      width: 300px;
+      height: 300px;
+      margin: 20px;
+      border: 2px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f9f9f9;
+    }
+    #image-container img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #sidebar img {
+      width: 100%;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Colonne de gauche -->
+  <div id="sidebar">
+    <h3>Images obtenues :</h3>
+    <div id="history">
+      <!-- Les miniatures des images obtenues s'afficheront ici -->
+    </div>
+  </div>
+
+  <!-- Zone principale -->
+  <div id="main">
+    <h1>Image Aléatoire</h1>
+    <button onclick="afficherImage()">Afficher une image</button>
+    <button onclick="resetImages()">Reset</button>
+    <div id="image-container">
+      <!-- L'image s'affichera ici -->
+    </div>
+  </div>
+
+  <script>
+    const imagesObtenues = new Set(); // Stocke les numéros des images déjà affichées
+
+    function afficherImage() {
+      if (imagesObtenues.size === 57) {
+        alert("Toutes les images ont été obtenues !");
+        return;
+      }
+
+      let numero;
+      do {
+        numero = Math.floor(Math.random() * 57) + 1; // Génère un numéro entre 1 et 100
+      } while (imagesObtenues.has(numero));
+
+      imagesObtenues.add(numero); // Ajoute l'image au set des images obtenues
+
+      // Affiche l'image dans le conteneur principal
+      const cheminImage = `images/${numero}.png`;
+      const container = document.getElementById('image-container');
+      container.innerHTML = `<img src="${cheminImage}" alt="Image ${numero}" />`;
+
+      // Ajoute l'image dans l'historique (colonne de gauche)
+      const history = document.getElementById('history');
+      const miniature = document.createElement('img');
+      miniature.src = cheminImage;
+      miniature.alt = `Image ${numero}`;
+      history.appendChild(miniature);
+    }
+
+    function resetImages() {
+      // Réinitialise le set des images obtenues
+      imagesObtenues.clear();
+
+      // Vide l'historique et le conteneur principal
+      document.getElementById('history').innerHTML = '';
+      document.getElementById('image-container').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
